@@ -1,0 +1,14 @@
+<template>
+  <div class="fundo">
+    <div class="cssload-tetrominos">
+      <div class="cssload-tetromino cssload-box1"></div>
+      <div class="cssload-tetromino cssload-box2"></div>
+      <div class="cssload-tetromino cssload-box3"></div>
+      <div class="cssload-tetromino cssload-box4"></div>
+    </div>
+    
+  </div>
+</template>
+<script>
+export default {};
+</script>
