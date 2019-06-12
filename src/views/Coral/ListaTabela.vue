@@ -68,13 +68,13 @@ export default {
       
     }
   },
-  watch: {
+  /* watch: {
     user(value) {
       if (value !== null && value !== undefined) {
         this.$router.push("/");
       }
     }
-  },
+  }, */
   created() {
     this.CarregarLista();
     /* this.$store.dispatch("loadUsuarios");

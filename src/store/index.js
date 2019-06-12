@@ -5,7 +5,7 @@ import * as Firebase from 'firebase'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+export const store = new Vuex.Store({
   state: {
     contagem: 0,
     errosCode: [
@@ -86,11 +86,12 @@ export default new Vuex.Store({
       Firebase.auth().signOut()
       commit('setUser', null)
       commit('setLoading', false)
+      localStorage.removeItem('token')
     },
     //Informações do usuário
     UserInfo() {
       var user = Firebase.auth().currentUser
-      console.log(user)
+      /* console.log(user) */
     },
     //Caso esqueça senha
     ChangePassword({ commit }, payload) {
@@ -262,6 +263,7 @@ export default new Vuex.Store({
               Nome: user.user.displayName
             }
             commit('setUser', newUser)
+            localStorage.setItem('token', newUser)
           }
         )
         .catch(error => {

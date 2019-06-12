@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
-import AuthGuard from './helpers/Auth-Guards.js'
+import Home from '../views/Home.vue'
+import AuthGuard from '../helpers/Auth-Guards.js'
 
 Vue.use(Router)
 
@@ -18,10 +18,11 @@ export default new Router({
     {
       path: '/cadastro',
       name: 'cadastro',
+      beforeEnter: AuthGuard,
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/Coral/CadastroCoral.vue')
+      component: () => import(/* webpackChunkName: "about" */ '../views/Coral/CadastroCoral.vue')
     },   
     {
       path: '/editar/:id',
@@ -30,7 +31,7 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/Coral/Editar.vue')
+      component: () => import(/* webpackChunkName: "about" */ '../views/Coral/Editar.vue')
     },
     {
       path: '/relacao',
@@ -38,7 +39,7 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/Coral/ListaTabela.vue'),
+      component: () => import(/* webpackChunkName: "about" */ '../views/Coral/ListaTabela.vue'),
       beforeEnter: AuthGuard
     },
     {
@@ -47,7 +48,7 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/Login/Login.vue')
+      component: () => import(/* webpackChunkName: "about" */ '../views/Login/Login.vue')
     },
     {
       path: '/register',
@@ -55,7 +56,7 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/Registro/Register.vue')
+      component: () => import(/* webpackChunkName: "about" */ '../views/Registro/Register.vue')
     },
     {
       path: '/profile/:id',
@@ -64,7 +65,7 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/Coral/Profile.vue')
+      component: () => import(/* webpackChunkName: "about" */ '../views/Coral/Profile.vue')
     }
     ,
     {
@@ -74,7 +75,7 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/Usuario/PrintProfile.vue')
+      component: () => import(/* webpackChunkName: "about" */ '../views/Usuario/PrintProfile.vue')
     }
   ]
 })

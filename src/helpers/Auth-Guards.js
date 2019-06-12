@@ -1,9 +1,16 @@
-import store from '@/store.js'
+import { store } from '../store'
+
+
+const openRoutes=['login', 'register','cadastro']
 
 export default (to, from, next) => {
-    if(store.getters.user){
-        return next()
-    } else {
-        next ('/login')
-    }
+
+  if(openRoutes.includes(to.name))  {
+      next()
+  }
+  else if (localStorage.getItem('token')) {
+    next()
+  }else {
+    next('/login')
+  }
 }
