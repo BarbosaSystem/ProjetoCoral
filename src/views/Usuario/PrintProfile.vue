@@ -94,7 +94,7 @@
                   Frequenta a catequese: {{usuario.FrequentaCat}}
                 </h2>
               </div>
-              <div class="ficha-60">
+              <div class="ficha-60" v-if="usuario.Etapa">
                 <h2 class="ficha-grupo">
                   <span></span>
                   Qual Etapa? {{usuario.Etapa}}

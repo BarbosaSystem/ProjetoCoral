@@ -159,7 +159,7 @@ export default new Vuex.Store({
         Serie: payload.Serie,
         Escola: payload.Escola,
         FrequentaCat: payload.FrequentaCat,
-        Etapa: payload.Etapa
+        Etapa: payload.Etapa != "" ? payload.Etapa : ""
       }
       Firebase.database().ref('criancaCoral')
         .child(payload.id)
