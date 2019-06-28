@@ -103,6 +103,7 @@ export const store = new Vuex.Store({
         commit('setLoading', false)
       }).catch(function (error) {
         alert(error)
+        commit('setLoading', false)
       });
     },
     //Metodo para carregar os dados do Firebase
