@@ -13,7 +13,7 @@
     "datatables.net": "^1.10.19",
     "express": "^4.16.4",
     "firebase": "^5.9.4",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "vue": "^2.6.6",
     "vue-jquery-mask": "^1.0.3",
     "vue-router": "^3.0.1",
