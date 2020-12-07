@@ -1,14 +1,6 @@
 <template>
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <!--<h1 class="text-center">Inscrição para o Coral Infantil da Catedral de Santo Antônio - 2019</h1>
-       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
-      </ol>-->
-    </section>
-
     <!-- Main content -->
     <section class="content container">
       <div class="row">
@@ -26,8 +18,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
-/* import HelloWorld from '@/components/HelloWorld.vue' */
 
 export default {};
 </script>

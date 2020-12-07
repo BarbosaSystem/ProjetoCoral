@@ -45,13 +45,10 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 export default {
   computed: {
-    user() {
-      if(this.userIsAuthenticated){
-        return this.$store.getters.user
-      }
-    },
+    ...mapGetters(["user"]),
     userIsAuthenticated() {
       return (
         this.$store.getters.user !== null &&

@@ -15,10 +15,6 @@
           </button>
         </router-link>
       </div>
-      <!-- <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
-      </ol>-->
     </section>
 
     <!-- Main content -->
@@ -29,12 +25,6 @@
             <li class="active">
               <a href="#activity" data-toggle="tab" aria-expanded="true">Dados</a>
             </li>
-            <!-- <li class>
-              <a href="#timeline" data-toggle="tab" aria-expanded="false">Responsáveis</a>
-            </li>
-            <li class>
-              <a href="#settings" data-toggle="tab" aria-expanded="false">Contato</a>
-            </li>-->
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="activity">

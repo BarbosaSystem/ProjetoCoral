@@ -4,13 +4,8 @@
     <app-side />
     <router-view />
     <!--Main Header -->
-    <!-- <loading v-if="user" /> -->
     <loading v-if="user"/>
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>-->
+
     <complet v-if="completo"/>
   </div>
 </template>
@@ -37,7 +32,10 @@ export default {
     completo() {
       return this.$store.getters.getConcluido;
     }
-  }
+  },
+  created() {
+    this.$store.dispatch("Action_VerificarEstado")
+  },
 };
 </script>
 

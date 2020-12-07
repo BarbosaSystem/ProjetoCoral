@@ -3,10 +3,12 @@ import 'firebase//firebase-auth';
 import 'firebase/firebase-database';
 
 import firebaseconfig from './firebaseconfig';
+import { resolve } from 'core-js/fn/promise';
 
 const firebaseApp = firebase.initializeApp(firebaseconfig);
 
 const db = firebaseApp.database();
+
 
 export default {
     Autenticacao:async (email, senha) => {
@@ -17,14 +19,37 @@ export default {
         return await firebaseApp.auth().signOut();
     },
     UsuarioAtual:async () => {
-        return await firebaseApp.auth().currentUser
+        let usuarioAutal =  await firebaseApp.auth().currentUser
+        return usuarioAutal
     },
     ResetarSenha:async (email) => {
         return await firebaseApp.auth().sendPasswordResetEmail(email);
     },
-    CarregarUsuarios: async () => {
-        return db.ref('criancaCoral').on('value').then((data => {
-            
-        }))
-    }
+    CarregarCriancaCoral: async () => {
+        return await db.ref('criancaCoral').once('value')
+    },
+    AtualizarCriancaCoral: async (codigo, criancaCoral) => {
+        return await db.ref('criancaCoral').child(codigo).update(criancaCoral)
+    },
+    NovaCriancaCoral:async (criancaCoral) => {
+        return await db.ref('criancaCoral').push(criancaCoral)
+    },
+    NovoUsuario:async (usuario) => {
+        let result = await firebaseApp.auth().createUserWithEmailAndPassword(usuario.email, usuario.password)
+        return result;
+    },
+    VerificarLogin:async () => {
+        return new Promise((resolve, reject) => {
+            const unsubs = firebaseApp.auth().onAuthStateChanged((user) => {
+                unsubs()
+                if(user){
+                    resolve(user)
+                }
+            })
+        })
+    },
+    
+}
+async function CarregaUsuario(user) {
+    return user
 }

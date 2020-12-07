@@ -30,13 +30,7 @@
               mask="99/99/9999"
               :raw="false"
             ></vue-mask>
-            <!-- <appdate @update-date="updateDate" dateFormat="dd/mm/yy" v-once/> -->
           </div>
-
-          <!-- <div class="form-group">
-            <label for>Nascimento:</label>
-            <appdate @update-date="updateDate" dateFormat="dd/mm/yy" v-once/>
-          </div>-->
         </div>
         <div class="col-xs-12 col-sm-8 espaco">
           <div class="form-group">
@@ -170,8 +164,6 @@
                 :options="optionsTelCel"
               ></vue-mask>
             </div>
-
-            <!-- <input type="text" v-model="cadastro.TelCelular" class="form-control"> -->
           </div>
         </div>
         <div class="col-xs-12 col-sm-4 espaco">

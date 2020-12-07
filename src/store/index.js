@@ -1,21 +1,24 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 /* import { stat } from 'fs'; */
-import * as Firebase from 'firebase'
+/* import * as Firebase from 'firebase' */
+import Api from '../helpers/Api'
 
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
     contagem: 0,
-    errosCode: [
-      { Ingles: 'auth/network-request-failed', Portugues: 'Ocorreu um erro de rede (como tempo limite, conexão interrompida ou host inacessível).' },
+    errosCode: [{
+        Ingles: 'auth/network-request-failed',
+        Portugues: 'Ocorreu um erro de rede (como tempo limite, conexão interrompida ou host inacessível).'
+      },
       {
-        Ingles: 'auth/wrong-password', Portugues: 'A senha é inválida ou o usuário não possui uma senha.'
+        Ingles: 'auth/wrong-password',
+        Portugues: 'A senha é inválida ou o usuário não possui uma senha.'
       }
     ],
-    loadedUsuarios: [
-    ],
+    loadedUsuarios: [],
     user: null,
     loading: false,
     error: null,
@@ -81,70 +84,89 @@ export const store = new Vuex.Store({
   },
   actions: {
     //Metodo para sair do sistema
-    logout({ commit }) {
+    async logout({
+      commit
+    }) {
       commit('setLoading', true)
-      Firebase.auth().signOut()
-      commit('setUser', null)
-      commit('setLoading', false)
-      localStorage.removeItem('token')
+      await Api.LogOff().then(() => {
+        commit('setUser', null)
+        commit('setLoading', false)
+        localStorage.removeItem('token')
+      });
+      /* Firebase.auth().signOut() */
+
     },
     //Informações do usuário
-    UserInfo() {
-      var user = Firebase.auth().currentUser
-      /* console.log(user) */
-    },
     //Caso esqueça senha
-    ChangePassword({ commit }, payload) {
+    async ChangePassword({
+      commit
+    }, payload) {
       commit('setLoading', true)
-      var auth = Firebase.auth();
 
-      auth.sendPasswordResetEmail(payload.email).then(function () {
+      await Api.ResetarSenha(payload.email).then(() => {
         alert('Email enviado')
         commit('setLoading', false)
-      }).catch(function (error) {
+      }).catch((error) => {
         alert(error)
         commit('setLoading', false)
-      });
+      })
     },
     //Metodo para carregar os dados do Firebase
-    loadUsuarios({ commit }) {
+    async Action_VerificarEstado({dispatch}){
+      await Api.VerificarLogin().then((user) => {
+        dispatch("autoSignIn", { id: user.uid, email: user.email, Nome: user.displayName })
+      })
+      
+/*     
+      if(resultado){
+        console.log(resultado)
+          var objeto = {
+             id : resultado.uid,
+             email : resultado.email,
+             Nome : resultado.displayName
+          }
+          console.log(objeto)
+          dispatch('autoSignIn', { id: resultado.uid, email: resultado.email, Nome: resultado.displayName })
+        } */
+    },
+    async loadUsuarios({commit}) {
       commit('setLoading', true)
-      Firebase.database().ref('criancaCoral').once('value')
-        .then((data) => {
-          const criancasCoral = []
-          const obj = data.val()
-          for (let key in obj) {
-            criancasCoral.push({
-              id: key,
-              Nome: obj[key].Nome,
-              Endereco: obj[key].Endereco,
-              Nascimento: obj[key].Nascimento,
-              Bairro: obj[key].Bairro,
-              TelFixo: obj[key].TelFixo,
-              TelCelular: obj[key].TelCelular,
-              Email: obj[key].Email,
-              Pai: obj[key].Pai,
-              Mae: obj[key].Mae,
-              TelefoneMae: obj[key].TelefoneMae,
-              TelefonePai: obj[key].TelefonePai,
-              Serie: obj[key].Serie,
-              Escola: obj[key].Escola,
-              FrequentaCat: obj[key].FrequentaCat,
-              Etapa: obj[key].Etapa
-            })
-          }
-          commit('setLoadedCriancaCoral', criancasCoral)
+      await Api.CarregarCriancaCoral().then((data) => {
+        const criancasCoral = []
+        const obj = data.val()
+        for (let key in obj) {
+          criancasCoral.push({
+            id: key,
+            Nome: obj[key].Nome,
+            Endereco: obj[key].Endereco,
+            Nascimento: obj[key].Nascimento,
+            Bairro: obj[key].Bairro,
+            TelFixo: obj[key].TelFixo,
+            TelCelular: obj[key].TelCelular,
+            Email: obj[key].Email,
+            Pai: obj[key].Pai,
+            Mae: obj[key].Mae,
+            TelefoneMae: obj[key].TelefoneMae,
+            TelefonePai: obj[key].TelefonePai,
+            Serie: obj[key].Serie,
+            Escola: obj[key].Escola,
+            FrequentaCat: obj[key].FrequentaCat,
+            Etapa: obj[key].Etapa
+          })
+        }
+        commit('setLoadedCriancaCoral', criancasCoral)
+        commit('setLoading', false)
+      }).catch(
+        (error) => {
           commit('setLoading', false)
+        }
+      )
 
-        })
-        .catch(
-          (error) => {
-            commit('setLoading', false)
-          }
-        )
     },
     //Metodo para atualizar os dados da criança do coral
-    UpdateUsuario({ commit }, payload) {
+    async UpdateUsuario({
+      commit
+    }, payload) {
       commit('setLoading', true)
       const criancaCoral = {
         Nome: payload.Nome,
@@ -163,31 +185,22 @@ export const store = new Vuex.Store({
         FrequentaCat: payload.FrequentaCat,
         Etapa: payload.Etapa != "" ? payload.Etapa : ""
       }
-      Firebase.database().ref('criancaCoral')
-        .child(payload.id)
-        .update(criancaCoral)
-        .then(() => {
-          /* const key = data.key
-          commit('createUsuario', {
-            ...criancaCoral,
-            id: key
-          }) */
-          commit('setLoading', false)
-          commit('updateCrianca', payload)
-          commit('setConcluido', true)
-          setTimeout(() => {
-            commit('setConcluido', false)
 
-          }, 1500)
-
-        })
-        .catch((error) => {
-          commit('setError', error)
-        })
-
+      await Api.AtualizarCriancaCoral(payload.id, criancaCoral).then(() => {
+        commit('setLoading', false)
+        commit('updateCrianca', payload)
+        commit('setConcluido', true)
+        setTimeout(() => {
+          commit('setConcluido', false)
+        }, 1500)
+      }).catch((error) => {
+        commit('setError', error)
+      })
     },
     //Metodo para cadastrar as crianças do coral
-    createUsuario({ commit }, payload) {
+    async createUsuario({
+      commit
+    }, payload) {
       commit('setLoading', true)
       const criancaCoral = {
         Nome: payload.Nome,
@@ -206,74 +219,75 @@ export const store = new Vuex.Store({
         FrequentaCat: payload.FrequentaCat,
         Etapa: payload.Etapa
       }
-      Firebase.database().ref('criancaCoral').push(criancaCoral)
-        .then((data) => {
-          const key = data.key
-          commit('createUsuario', {
-            ...criancaCoral,
-            id: key
-          })
-          commit('setLoading', false)
-          commit('setConcluido', true)
-          setTimeout(() => {
-            commit('setConcluido', false)
 
-          }, 1500)
+      await Api.NovaCriancaCoral(criancaCoral).then((data) => {
+        const key = data.key
+        commit('createUsuario', {
+          ...criancaCoral,
+          id: key
+        })
+        commit('setLoading', false)
+        commit('setConcluido', true)
+        setTimeout(() => {
+          commit('setConcluido', false)
 
-        })
-        .catch((error) => {
-        })
+        }, 1500)
+      })
     },
     //Método para registrar usuario no firebase
-    signUserUp({ commit }, payload) {
+    async signUserUp({
+      commit
+    }, payload) {
       //CSS Loading
       commit('setLoading', true)
       commit('clearError')
-      Firebase.auth().createUserWithEmailAndPassword(payload.Email, payload.Password)
-        .then(user => {
-          commit('setLoading', true)
 
-          user.user.updateProfile({
-            displayName: payload.Nome,
-          }).then((s) => {
-            const newUser = {
-              id: user.user.uid,
-              Email: user.user.email,
-              Nome: user.user.displayName
-            }
-            commit('setUser', newUser)
-          })
-
-        }).catch(
-          error => {
-            commit('setLoading', false)
+      await Api.NovoUsuario(payload.email, payload.Password).then((user) => {
+        commit('setLoading', true)
+        user.user.updateProfile({
+          displayName: payload.Nome,
+        }).then((s) => {
+          const newUser = {
+            id: user.user.uid,
+            Email: user.user.email,
+            Nome: user.user.displayName
           }
-        )
+          commit('setUser', newUser)
+        })
+      }).catch(
+        error => {
+          commit('setLoading', false)
+        }
+      )
     },
     //Metodo para autenticar um usuario no firebase
-    signUserIn({ commit }, payload) {
+    async signUserIn({
+      commit
+    }, payload) {
       commit('setLoading', true)
       commit('clearError')
-      Firebase.auth().signInWithEmailAndPassword(payload.Email, payload.Password)
-        .then(
-          user => {
-            commit('setLoading', false)
-            const newUser = {
-              id: user.user.uid,
-              email: user.user.email,
-              Nome: user.user.displayName
-            }
-            commit('setUser', newUser)
-            localStorage.setItem('token', newUser)
-          }
-        )
-        .catch(error => {
-          commit('setError', 'Não foi possível concluir requerimento de acesso. Favor verificar suas credenciais ou se há conexão com a internet.')
-          commit('setLoading', false)
-        })
+      await Api.Autenticacao(payload.Email, payload.Password).then((user) => {
+        commit('setLoading', false)
+        const newUser = {
+          id: user.user.uid,
+          email: user.user.email,
+          Nome: user.user.displayName
+        }
+        commit('setUser', newUser)
+        localStorage.setItem('token', newUser)
+      }).catch(error => {
+        commit('setError', 'Não foi possível concluir requerimento de acesso. Favor verificar suas credenciais ou se há conexão com a internet.')
+        commit('setLoading', false)
+      })
     },
-    autoSignIn({ commit }, payload) {
-      commit('setUser', { id: payload.uid, email: payload.email, Nome: payload.displayName })
+    autoSignIn({
+      commit
+    }, payload) {
+      commit('setUser', {
+        id: payload.uid,
+        email: payload.email,
+        Nome: payload.Nome
+      })
     },
   },
   getters: {
