@@ -3,10 +3,6 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1 class="text-center">Inscrição para o Coral Infantil da Catedral de Santo Antônio - 2019</h1>
-      <!-- <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
-      </ol>-->
     </section>
 
     <!-- Main content -->
@@ -135,11 +131,7 @@
                 :options="optionsTelCel"
               ></vue-mask>
             </div>
-
-            <!-- <input type="text" v-model="cadastro.TelCelular" class="form-control"> -->
           </div>
-
-          <!-- <input type="text" v-model="cadastro.TelCelular" class="form-control"> -->
         </div>
         <div class="col-xs-12 col-sm-8 espaco">
           <div class="form-group">
@@ -155,7 +147,6 @@
               <div class="input-group-addon">
                 <i class="fa fa-phone"></i>
               </div>
-
               <vue-mask
                 class="form-control"
                 v-model="cadastro.TelefoneMae"
@@ -229,12 +220,7 @@
   </div>
 </template>
 <script>
-import Appdate from "@/components/Data.vue";
-
 export default {
-  components: {
-    Appdate
-  },
   methods: {
     makeid(length) {
       let text = "";

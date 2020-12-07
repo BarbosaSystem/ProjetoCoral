@@ -29,12 +29,8 @@
           <div class="tab-content">
             <div class="tab-pane active" id="activity">
               <div class="row">
-                <!-- <div class="col-xs-12 center">
-                </div>-->
                 <div class="col-xs-12 col-sm-9">
                   <h4 class="blue">
-                    <!-- <span class="middle">John Doe</span> -->
-
                     <span class="label label-purple arrowed-in-right">
                       <i class="ace-icon fa fa-circle smaller-80 align-middle"></i>
                       online
@@ -60,14 +56,6 @@
                         <span>{{usuario.Endereco}}, {{usuario.Bairro}}</span>
                       </div>
                     </div>
-
-                    <!-- <div class="profile-info-row">
-                      <div class="profile-info-name">E-mail:</div>
-
-                      <div class="profile-info-value">
-                        <span>fulanodetal@tal.com.br</span>
-                      </div>
-                    </div>-->
                      <div class="profile-info-row">
                       <div class="profile-info-name">Telefone Fixo:</div>
 
@@ -183,23 +171,4 @@ export default {
 .content-header > h1 {
   margin: 20px 0 10px 0;
 }
-/* .profile-info-name{
-    text-align: right;
-    padding: 6px 10px 6px 4px;
-    font-weight: 400;
-    color: #667E99;
-    background-color: transparent;
-    width: 110px;
-    vertical-align: middle;
-}
-.profile-info-value {
-    padding: 6px 4px 6px 6px;
-}
-
-.profile-user-info {
-    display: table;
-    width: 98%;
-    width: calc(100% - 24px);
-    margin: 0 auto;
-} */
 </style>

@@ -1,5 +1,3 @@
-import { store } from '../store'
-
 
 const openRoutes=['login', 'register','cadastro']
 

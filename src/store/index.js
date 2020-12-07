@@ -116,18 +116,12 @@ export const store = new Vuex.Store({
       await Api.VerificarLogin().then((user) => {
         dispatch("autoSignIn", { id: user.uid, email: user.email, Nome: user.displayName })
       })
-      
-/*     
-      if(resultado){
-        console.log(resultado)
-          var objeto = {
-             id : resultado.uid,
-             email : resultado.email,
-             Nome : resultado.displayName
-          }
-          console.log(objeto)
-          dispatch('autoSignIn', { id: resultado.uid, email: resultado.email, Nome: resultado.displayName })
-        } */
+    },
+    async RemoverCrianca({dispatch}, payload){
+      if(await Api.RemoverCrianca(payload)){
+        alert("Criança removida com sucesso")
+        dispatch("loadUsuarios")
+      }
     },
     async loadUsuarios({commit}) {
       commit('setLoading', true)
@@ -246,7 +240,7 @@ export const store = new Vuex.Store({
         commit('setLoading', true)
         user.user.updateProfile({
           displayName: payload.Nome,
-        }).then((s) => {
+        }).then(() => {
           const newUser = {
             id: user.user.uid,
             Email: user.user.email,
@@ -255,7 +249,7 @@ export const store = new Vuex.Store({
           commit('setUser', newUser)
         })
       }).catch(
-        error => {
+        () => {
           commit('setLoading', false)
         }
       )
@@ -275,7 +269,7 @@ export const store = new Vuex.Store({
         }
         commit('setUser', newUser)
         localStorage.setItem('token', newUser)
-      }).catch(error => {
+      }).catch( () => {
         commit('setError', 'Não foi possível concluir requerimento de acesso. Favor verificar suas credenciais ou se há conexão com a internet.')
         commit('setLoading', false)
       })

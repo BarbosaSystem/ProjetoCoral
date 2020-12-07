@@ -13,19 +13,19 @@
     <section class="content container">
       <div class="col-sm-12">
         <!-- <data-table class="table table-bordered" :comments="filteredComments" :titulo="cabecalho"/> -->
-        <tabela :cabecalho="cabecalho" :rows="usuarios" v-if="usuarios !== null" v-once/>
+        <!-- <tabela :cabecalho="cabecalho" :rows="usuarios" v-if="usuarios !== null" v-once/> -->
       </div>
           
     </section>
   </div>
 </template>
 <script>
-import tabela from "@/components/Tabela.vue";
+/* import tabela from "@/components/Tabela.vue"; */
 
 export default {
-  components: {
+  /* components: {
     tabela
-  },
+  }, */
    methods: {
     mostrar() {
       alert('ola')

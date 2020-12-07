@@ -71,7 +71,7 @@ export default new Router({
     ,
     {
       path: '/print/:id',
-      name: 'profile',
+      name: 'print',
       props: true,
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route

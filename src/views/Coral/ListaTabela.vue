@@ -7,8 +7,9 @@
     <!-- Main content -->
     <section class="content container">
       <div class="col-sm-12" v-if="loadedUsuarios.length > 0">
+        <data-tabela></data-tabela>
         <!-- <data-table class="table table-bordered" :comments="filteredComments" :titulo="cabecalho"/> -->
-        <table id="example2" class="table table-bordered table-hover" v-once>
+        <!-- <table id="example2" class="table table-bordered table-hover" v-once>
           <thead>
             <tr>
               <th class="text-center">Nome</th>
@@ -31,7 +32,7 @@
               </td>
             </tr>
           </tbody>
-        </table>
+        </table> -->
       </div>
       <div class="col-xs-12" v-if="loadedUsuarios.length < 1">
         <div class="box">
@@ -50,7 +51,11 @@
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
+import tabela from '../../components/Tabela.vue'
 export default {
+  components: {
+    'data-tabela' : tabela
+  },
   methods: {
     ...mapActions({
       Carregar: "loadUsuarios",
@@ -63,7 +68,7 @@ export default {
     ...mapGetters(["loadedUsuarios", "loading"]),
   },
   mounted() {
-    $("#example2").DataTable({
+    /* $("#example2").DataTable({
       searching: false,
       paging: true,
       info: true,
@@ -78,7 +83,7 @@ export default {
         },
         info: "Mostrando _PAGE_ de _PAGES_ página(s)",
       },
-    });
+    }); */
   },
   data() {
     return {
