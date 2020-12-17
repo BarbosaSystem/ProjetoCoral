@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
-    "datatables.net": "^1.10.19",
+    "datatables.net": "^1.10.22",
     "express": "^4.16.4",
     "firebase": "^5.9.4",
     "jquery": "^3.3.1",
